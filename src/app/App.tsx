@@ -496,10 +496,6 @@ export default function App() {
           <Reveal className="pf-contact-card">
             <p className="pf-eyebrow">Contact</p>
             <h2>Let the work open the conversation.</h2>
-            <p>
-              Replace this section with the architect's real email, phone number, Facebook page,
-              or studio details. No heavy form needed for the first version.
-            </p>
             <div className="pf-contact-actions">
               <a className="pf-button primary" href="mailto:niccojohn.roma@lccbonline.edu.ph">niccojohn.roma@lccbonline.edu.ph</a>
               <a className="pf-button ghost" href="tel:+639950581296">+63 995 058 1296</a>
