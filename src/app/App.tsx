@@ -496,6 +496,11 @@ export default function App() {
           <Reveal className="pf-contact-card">
             <p className="pf-eyebrow">Contact</p>
             <h2>Let the work open the conversation.</h2>
+            <p>
+              Every project begins with a vision, a space, and a story waiting to be shaped.
+              Let’s turn ideas into thoughtful architecture built with purpose, detail, and
+              lasting character.
+            </p>
             <div className="pf-contact-actions">
               <a className="pf-button primary" href="mailto:niccojohn.roma@lccbonline.edu.ph">niccojohn.roma@lccbonline.edu.ph</a>
               <a className="pf-button ghost" href="tel:+639950581296">+63 995 058 1296</a>
