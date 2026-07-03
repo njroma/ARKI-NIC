@@ -1045,7 +1045,9 @@
 }
 
 .pf > main,
-.pf-footer {
+.pf-site-header,
+.pf-footer,
+.pf-lightbox {
   position: relative;
   z-index: 2;
 }
