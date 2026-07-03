@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import "../styles/portfolio.css";
 
 import heroFrontFacade from "../assets/hero-front-facade.jpg";
@@ -225,8 +226,41 @@ export default function App() {
     { src: supermarketEventElevations, title: "Supermarket + Event Hall Elevations", sub: "Exterior rhythm and section studies", alt: "Supermarket and event hall elevations and sections" },
   ];
 
+  const header = (
+    <header className={`pf-site-header${scrolled ? " scrolled" : ""}`}>
+      <a className="pf-brand" href="#top" aria-label="Go to homepage">
+        <span className="pf-brand-mark">NR</span>
+        <span>
+          <strong>Nicco John R. Roma</strong>
+          <small>Architecture Portfolio</small>
+        </span>
+      </a>
+
+      <button
+        className={`pf-menu-toggle${navOpen ? " is-open" : ""}`}
+        type="button"
+        aria-expanded={navOpen}
+        aria-label={navOpen ? "Close navigation" : "Open navigation"}
+        onClick={() => setNavOpen((v) => !v)}
+      >
+        <span />
+        <span />
+      </button>
+
+      <nav className={`pf-nav${navOpen ? " is-open" : ""}`}>
+        <a href="#work" onClick={closeNav} className={activeSection === "work" ? "active" : ""}>Work</a>
+        <a href="#concept" onClick={closeNav} className={activeSection === "concept" ? "active" : ""}>Concept</a>
+        <a href="#drawings" onClick={closeNav} className={activeSection === "drawings" ? "active" : ""}>Drawings</a>
+        <a href="#details" onClick={closeNav} className={activeSection === "details" ? "active" : ""}>Details</a>
+        <a className={`pf-nav-cta${activeSection === "contact" ? " active" : ""}`} href="#contact" onClick={closeNav}>Inquire</a>
+      </nav>
+    </header>
+  );
+
   return (
-    <div className="pf">
+    <>
+      {createPortal(header, document.body)}
+      <div className="pf">
       <div className="pf-cursor-aurora" aria-hidden="true" />
       <div className="pf-orb pf-orb-one" aria-hidden="true" />
       <div className="pf-orb pf-orb-two" aria-hidden="true" />
@@ -237,35 +271,6 @@ export default function App() {
         aria-hidden="true"
       />
 
-      {/* Header */}
-      <header className={`pf-site-header${scrolled ? " scrolled" : ""}`}>
-        <a className="pf-brand" href="#top" aria-label="Go to homepage">
-          <span className="pf-brand-mark">NR</span>
-          <span>
-            <strong>Nicco John R. Roma</strong>
-            <small>Architecture Portfolio</small>
-          </span>
-        </a>
-
-        <button
-          className={`pf-menu-toggle${navOpen ? " is-open" : ""}`}
-          type="button"
-          aria-expanded={navOpen}
-          aria-label={navOpen ? "Close navigation" : "Open navigation"}
-          onClick={() => setNavOpen((v) => !v)}
-        >
-          <span />
-          <span />
-        </button>
-
-        <nav className={`pf-nav${navOpen ? " is-open" : ""}`}>
-          <a href="#work" onClick={closeNav} className={activeSection === "work" ? "active" : ""}>Work</a>
-          <a href="#concept" onClick={closeNav} className={activeSection === "concept" ? "active" : ""}>Concept</a>
-          <a href="#drawings" onClick={closeNav} className={activeSection === "drawings" ? "active" : ""}>Drawings</a>
-          <a href="#details" onClick={closeNav} className={activeSection === "details" ? "active" : ""}>Details</a>
-          <a className={`pf-nav-cta${activeSection === "contact" ? " active" : ""}`} href="#contact" onClick={closeNav}>Inquire</a>
-        </nav>
-      </header>
 
       <main id="top">
         {/* Hero */}
@@ -577,6 +582,7 @@ export default function App() {
           <p>{lightbox.title}</p>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }
