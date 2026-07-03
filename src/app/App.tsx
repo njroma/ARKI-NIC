@@ -107,11 +107,26 @@ export default function App() {
   const [navOpen, setNavOpen] = useState(false);
   const [lightbox, setLightbox] = useState<LightboxState>({ open: false, src: "", title: "" });
   const [activeSection, setActiveSection] = useState("work");
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      setScrolled(window.scrollY > 20);
+      setScrollProgress(scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 0);
+    };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onPointerMove = (event: PointerEvent) => {
+      document.documentElement.style.setProperty("--pointer-x", `${event.clientX}px`);
+      document.documentElement.style.setProperty("--pointer-y", `${event.clientY}px`);
+    };
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onPointerMove);
   }, []);
 
   useEffect(() => {
@@ -212,7 +227,15 @@ export default function App() {
 
   return (
     <div className="pf">
+      <div className="pf-cursor-aurora" aria-hidden="true" />
+      <div className="pf-orb pf-orb-one" aria-hidden="true" />
+      <div className="pf-orb pf-orb-two" aria-hidden="true" />
       <div className="pf-grain" aria-hidden="true" />
+      <div
+        className="pf-scroll-progress"
+        style={{ transform: `scaleX(${scrollProgress})` }}
+        aria-hidden="true"
+      />
 
       {/* Header */}
       <header className={`pf-site-header${scrolled ? " scrolled" : ""}`}>
@@ -248,8 +271,11 @@ export default function App() {
         {/* Hero */}
         <section className="pf-hero pf-section-pad">
           <Reveal className="pf-hero-copy">
+            <div className="pf-status-pill" aria-label="Available for architectural presentation work">
+              <span /> Live portfolio experience
+            </div>
             <p className="pf-eyebrow">Thesis Project / 2026</p>
-            <h1>A Community-Integrated Commercial Complex in Kabankalan City</h1>
+            <h1><span>A Community-Integrated</span> <span>Commercial Complex</span> <span>in Kabankalan City</span></h1>
             <p className="pf-hero-lead">
               A portfolio-focused digital experience built around architectural imagery,
               spatial storytelling, material language, and the thesis concept of{" "}
@@ -262,6 +288,7 @@ export default function App() {
           </Reveal>
 
           <Reveal className="pf-hero-gallery">
+            <div className="pf-hero-ring" aria-hidden="true" />
             <figure
               className="pf-hero-card pf-hero-card-large"
               onClick={() => openLightbox(heroFrontFacade, "Front Facade")}
@@ -287,6 +314,21 @@ export default function App() {
               <figcaption>Site Plan</figcaption>
             </figure>
           </Reveal>
+        </section>
+
+        <section className="pf-marquee" aria-label="Portfolio highlights">
+          <div>
+            <span>Spatial Storytelling</span>
+            <span>Climate Response</span>
+            <span>Public Realm</span>
+            <span>Material Warmth</span>
+            <span>Hugpong</span>
+            <span>Spatial Storytelling</span>
+            <span>Climate Response</span>
+            <span>Public Realm</span>
+            <span>Material Warmth</span>
+            <span>Hugpong</span>
+          </div>
         </section>
 
         {/* Project Intro */}
